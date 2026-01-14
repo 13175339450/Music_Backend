@@ -1,0 +1,40 @@
+# Java class files
+*.class
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+/target
+/target/
+**/target/
+
+
+.DS_Store
+Thumbs.db
+/.gradle/
+/ignite/
+
+install_bz/*.jar
+install_zx/*.jar
+install_bz/*.sql
+install_zx/*.sql
+install_bz/*.sh
+install_zx/*.sh
+install_bz/incrementsql/
+install_zx/incrementsql/
+test/src/main/resources/static/
+test/src/test/
+test/hst_gtone.zip
+ces_manager/src/main/resources/static/
+ces_manager/src/main/resources_bz/static/
+ces_manager/src/main/resources_zx/static/
+#base_tool/src/test/
+base_tool/src/test/

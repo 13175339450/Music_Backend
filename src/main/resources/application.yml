@@ -1,0 +1,79 @@
+spring:
+  application:
+    name: social-music-platform
+  
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://8.148.27.225:23306/music_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: remote
+    
+  # JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  
+  # Redis配置
+  redis:
+    host: 8.148.29.196
+    port: 26379
+    database: 0
+    timeout: 3000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    password: 123456
+  # 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+# 服务器配置
+server:
+  port: 8084
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+# JWT配置
+jwt:
+  secret: socialMusicPlatformSecretKeyWithAtLeast256BitsForSecureJWTGeneration
+  expiration: 86400000 # 24小时
+  header: Authorization
+
+# 日志配置
+logging:
+  level:
+    com.music: DEBUG
+
+# 文件存储路径
+file:
+  upload:
+    path: f:/music-upload/
+    music:
+      path: ${file.upload.path}music/
+    avatar:
+      path: ${file.upload.path}avatar/
+    cover:
+      path: ${file.upload.path}cover/
+    image:
+      path: ${file.upload.path}image/
+    video:
+      path: ${file.upload.path}video/
+  access:
+    image:
+      url: http://localhost:8084/api/files/image/
+    video:
+      url: http://localhost:8084/api/files/video/
