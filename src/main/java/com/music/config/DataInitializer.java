@@ -4,6 +4,7 @@ import com.music.entity.Role;
 import com.music.entity.User;
 import com.music.repository.RoleRepository;
 import com.music.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class DataInitializer implements CommandLineRunner {
 
     @Autowired
@@ -26,6 +28,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.info(">>>开始初始化Role表...");
         // 创建ADMIN角色
         Role adminRole = roleRepository.findByName("ROLE_ADMIN")
                 .orElseGet(() -> {
@@ -52,7 +55,7 @@ public class DataInitializer implements CommandLineRunner {
                     role.setDescription("音乐人角色");
                     return roleRepository.save(role);
                 });
-
+        log.info(">>>Role表初始化完成");
         // 创建管理员用户
         User admin = userRepository.findByUsername("admin")
                 .orElseGet(() -> {
@@ -109,5 +112,6 @@ public class DataInitializer implements CommandLineRunner {
         musician1.setRegisterTime(new Date());
         musician1.setRoles(Collections.singletonList(musicianRole));
         userRepository.save(musician1);
+        log.info(">>>User表初始化完成");
     }
 }

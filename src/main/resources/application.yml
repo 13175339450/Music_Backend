@@ -1,7 +1,7 @@
 spring:
   application:
     name: social-music-platform
-  
+
   # 数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,7 +12,7 @@ spring:
   # JPA配置
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none # 不自动更新数据库表结构
     show-sql: true
     properties:
       hibernate:
@@ -61,7 +61,7 @@ logging:
 # 文件存储路径
 file:
   upload:
-    path: f:/music-upload/
+    path: d:/music-upload/
     music:
       path: ${file.upload.path}music/
     avatar:

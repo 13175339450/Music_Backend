@@ -5,7 +5,9 @@ import com.music.entity.User;
 import com.music.repository.MusicRepository;
 import com.music.repository.UserRepository;
 import com.music.util.FileUploadUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class ImportLocalMusicRunner implements CommandLineRunner {
 
     @Autowired
@@ -26,13 +29,19 @@ public class ImportLocalMusicRunner implements CommandLineRunner {
     @Autowired
     private FileUploadUtil fileUploadUtil;
 
+    @Value("${file.upload.path}")
+    private String musicRootPath;
+
     @Override
     public void run(String... args) throws Exception {
-        File marker = new File("f:/music-upload/imported.marker");
+        log.info(">>>开始导入本地音乐...");
+        File marker = new File(musicRootPath + "imported.marker");
         if (marker.exists()) {
+            log.info(">>>本地音乐已导入，跳过...");
             return;
         }
-        File sourceDir = new File("f:/JavaBiShe/Design and Implementation of  Socialized Music Platform/音乐");
+        log.info(">>>开始读取本地音乐...");
+        File sourceDir = new File("d:/music-project");
         if (!sourceDir.exists() || !sourceDir.isDirectory()) {
             return;
         }
@@ -76,5 +85,6 @@ public class ImportLocalMusicRunner implements CommandLineRunner {
         }
         marker.getParentFile().mkdirs();
         Files.writeString(marker.toPath(), "imported=" + imported);
+        log.info(">>>成功导入 {} 首本地音乐", imported);
     }
 }
