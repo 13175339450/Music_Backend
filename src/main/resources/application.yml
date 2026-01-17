@@ -17,20 +17,21 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-  
-  # Redis配置
-  redis:
-    host: 8.148.29.196
-    port: 26379
-    database: 0
-    timeout: 3000
-    lettuce:
-      pool:
-        max-active: 8
-        max-wait: -1
-        max-idle: 8
-        min-idle: 0
-    password: 123456
+
+  data:
+    # Redis配置
+    redis:
+      host: 8.148.29.196
+      port: 26379
+      password: 123456
+      database: 0
+      timeout: 3000
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
   # 文件上传配置
   servlet:
     multipart:
