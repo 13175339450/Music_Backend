@@ -24,4 +24,7 @@ public interface MusicRepository extends JpaRepository<Music, Long> {
     
     @Query("SELECT m.genre, COUNT(m) FROM Music m WHERE m.genre IS NOT NULL AND m.status = 1 GROUP BY m.genre")
     List<Object[]> countByGenre();
+    
+    @Query("SELECT SUM(m.playCount) FROM Music m")
+    Long sumPlayCount();
 }

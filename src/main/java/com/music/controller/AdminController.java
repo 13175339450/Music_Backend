@@ -83,13 +83,9 @@ public class AdminController {
         long totalMusic = musicRepository.count();
         long totalPosts = postRepository.count();
         
-        long totalMusicians = userRepository.findAll().stream()
-                .filter(u -> u.getRoles() != null && u.getRoles().stream().anyMatch(r -> "ROLE_MUSICIAN".equals(r.getName())))
-                .count();
+        long totalMusicians = userRepository.countMusicians();
         
-        long totalPlays = musicRepository.findAll().stream()
-                .mapToLong(m -> m.getPlayCount() == null ? 0 : m.getPlayCount())
-                .sum();
+        Long totalPlays = musicRepository.sumPlayCount();
         
         long totalComments = commentRepository.count();
         
@@ -105,7 +101,7 @@ public class AdminController {
         stats.put("postsChange", 0);
         stats.put("totalMusicians", totalMusicians);
         stats.put("musiciansChange", 0);
-        stats.put("totalPlays", totalPlays);
+        stats.put("totalPlays", totalPlays != null ? totalPlays : 0);
         stats.put("playsChange", 0);
         stats.put("totalComments", totalComments);
         stats.put("commentsChange", 0);
@@ -189,6 +185,9 @@ public class AdminController {
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userRepository.findAll();
+        users.forEach(u -> {
+            u.setPassword(null);
+        });
         return ResponseEntity.ok(users);
     }
 

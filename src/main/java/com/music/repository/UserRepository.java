@@ -29,4 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     @Query(value = "SELECT COUNT(u.id) FROM user u JOIN user_role ur ON u.id = ur.user_id JOIN role r ON ur.role_id = r.id WHERE r.name = :roleName AND DATE(u.register_time) = :date", nativeQuery = true)
     Long countByRegisterTimeAndRole(@Param("date") String date, @Param("roleName") String roleName);
+    
+    @Query("SELECT COUNT(u) FROM User u JOIN u.roles r WHERE r.name = 'ROLE_MUSICIAN'")
+    Long countMusicians();
 }
