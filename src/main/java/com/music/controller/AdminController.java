@@ -2,7 +2,6 @@ package com.music.controller;
 
 import com.music.entity.Music;
 import com.music.entity.Post;
-import com.music.entity.Playlist;
 import com.music.entity.PlayRecord;
 import com.music.entity.Role;
 import com.music.entity.User;
@@ -11,7 +10,6 @@ import com.music.repository.CommentRepository;
 import com.music.repository.PostRepository;
 import com.music.repository.RoleRepository;
 import com.music.repository.UserRepository;
-import com.music.repository.PlaylistRepository;
 import com.music.repository.PlayRecordRepository;
 import com.music.repository.MusicLikeRepository;
 import com.music.repository.UserFollowRepository;
@@ -61,9 +59,6 @@ public class AdminController {
     
     @Autowired
     private CommentRepository commentRepository;
-    
-    @Autowired
-    private PlaylistRepository playlistRepository;
     
     @Autowired
     private PlayRecordRepository playRecordRepository;
@@ -337,11 +332,6 @@ public class AdminController {
         List<Music> userMusics = musicRepository.findByMusicianId(user.getId());
         for (Music music : userMusics) {
             musicService.deleteMusic(music.getId());
-        }
-        
-        List<Playlist> playlists = playlistRepository.findByUserId(id);
-        if (!playlists.isEmpty()) {
-            playlistRepository.deleteAll(playlists);
         }
         
         List<PlayRecord> playRecords = playRecordRepository.findByUserId(id);

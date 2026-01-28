@@ -32,9 +32,6 @@ public class UserController {
     private PostRepository postRepository;
 
     @Autowired
-    private PlaylistRepository playlistRepository;
-
-    @Autowired
     private MusicLikeRepository musicLikeRepository;
 
     @Autowired
@@ -117,7 +114,6 @@ public class UserController {
         // 统计信息
         profile.put("favoriteCount", musicLikeRepository.countByUserId(user.getId()));
         profile.put("postCount", postRepository.findByUserId(user.getId()).size());
-        profile.put("playlistCount", playlistRepository.findByUserId(user.getId()).size());
         
         // 添加角色信息
         List<String> roles = user.getRoles().stream()
@@ -140,7 +136,6 @@ public class UserController {
         profile.put("createdAt", target.getRegisterTime());
         profile.put("favoriteCount", musicLikeRepository.countByUserId(target.getId()));
         profile.put("postCount", postRepository.findByUserId(target.getId()).size());
-        profile.put("playlistCount", playlistRepository.findByUserId(target.getId()).size());
         List<String> roles = target.getRoles() == null ? java.util.List.of() : target.getRoles().stream().map(Role::getName).collect(Collectors.toList());
         profile.put("roles", roles);
         return ResponseEntity.ok(profile);
