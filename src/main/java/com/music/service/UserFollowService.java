@@ -55,11 +55,11 @@ public class UserFollowService {
 
     public long getNewFollowersCount(Long userId, int days) {
         java.time.LocalDateTime startDate = java.time.LocalDateTime.now().minusDays(days);
-        return userFollowRepository.countByFollowingIdAndCreatedAtAfter(userId, startDate);
+        return userFollowRepository.countByFollowingIdAndCreateTimeAfter(userId, startDate);
     }
 
     public long getNewFollowersCountBetween(Long userId, java.time.LocalDateTime start, java.time.LocalDateTime end) {
-        return userFollowRepository.countByFollowingIdAndCreatedAtBetween(userId, start, end);
+        return userFollowRepository.countByFollowingIdAndCreateTimeBetween(userId, start, end);
     }
 
     public List<User> getFollowingUsers(Long userId) {

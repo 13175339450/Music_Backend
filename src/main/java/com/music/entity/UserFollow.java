@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_follows", uniqueConstraints = {
+@Table(name = "follow", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"follower_id", "following_id"})
 })
 public class UserFollow {
@@ -23,8 +23,8 @@ public class UserFollow {
     @JsonIgnore
     private User following;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "create_time")
+    private LocalDateTime createTime;
 
     public Long getId() {
         return id;
@@ -50,16 +50,16 @@ public class UserFollow {
         this.following = following;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
+        createTime = LocalDateTime.now();
     }
 }

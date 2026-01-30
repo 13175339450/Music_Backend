@@ -12,8 +12,8 @@ public interface UserFollowRepository extends JpaRepository<UserFollow, Long> {
     void deleteByFollowerIdAndFollowingId(Long followerId, Long followingId);
     long countByFollowingId(Long followingId); // Fan count
     long countByFollowerId(Long followerId);   // Following count
-    long countByFollowingIdAndCreatedAtAfter(Long followingId, java.time.LocalDateTime date);
-    long countByFollowingIdAndCreatedAtBetween(Long followingId, java.time.LocalDateTime start, java.time.LocalDateTime end);
+    long countByFollowingIdAndCreateTimeAfter(Long followingId, java.time.LocalDateTime date);
+    long countByFollowingIdAndCreateTimeBetween(Long followingId, java.time.LocalDateTime start, java.time.LocalDateTime end);
     void deleteByFollowerId(Long followerId);
     void deleteByFollowingId(Long followingId);
     List<UserFollow> findByFollowerId(Long followerId);
