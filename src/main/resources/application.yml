@@ -8,7 +8,28 @@ spring:
     url: jdbc:mysql://8.148.27.225:23306/music_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: remote
-    
+    # Hikari 连接池配置
+    hikari:
+      # 连接最大存活时间设置为25分钟（比MySQL的wait_timeout短）
+      max-lifetime: 1500000  # 25分钟（1500000毫秒）
+      # 空闲连接超时设置为10分钟
+      idle-timeout: 600000   # 10分钟
+      # 连接验证配置
+      connection-test-query: SELECT 1
+      validation-timeout: 3000  # 3秒
+      # 连接超时设置
+      connection-timeout: 30000  # 30秒
+      # 最小和最大连接数
+      minimum-idle: 3      # 减少最小空闲连接数
+      maximum-pool-size: 10 # 减少最大连接数
+      # 连接泄漏检测
+      leak-detection-threshold: 30000  # 30秒
+      # 新增：从池中获取连接时验证
+      connection-init-sql: SELECT 1
+      # 新增：连接保持活跃间隔
+      keepalive-time: 300000  # 5分钟发送一次keepalive
+
+
   # JPA配置
   jpa:
     hibernate:
@@ -26,12 +47,17 @@ spring:
       password: 123456
       database: 0
       timeout: 3000
+      # Lettuce连接池配置（和redis客户端配合分配连接管理）
       lettuce:
         pool:
-          max-active: 8
-          max-wait: -1
-          max-idle: 8
-          min-idle: 0
+          max-active: 20
+          max-idle: 10
+          min-idle: 5
+          max-wait: 3000ms
+          time-between-eviction-runs: 30000ms
+          test-while-idle: true
+          test-on-borrow: true
+        shutdown-timeout: 200ms
   # 文件上传配置
   servlet:
     multipart:
