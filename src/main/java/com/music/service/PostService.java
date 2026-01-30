@@ -26,9 +26,22 @@ public class PostService {
     private PostLikeRepository postLikeRepository;
     
     public Post createPost(Post post) {
-        // 默认设置为待审核状态
-        post.setStatus(1);
+        // 检查用户是否为管理员，如果是则自动通过审核
+        if (isAdmin(post.getUser())) {
+            post.setStatus(2); // 2表示已通过审核
+        } else {
+            post.setStatus(1); // 1表示待审核
+        }
         return postRepository.save(post);
+    }
+    
+    // 检查用户是否为管理员
+    private boolean isAdmin(User user) {
+        if (user == null || user.getRoles() == null) {
+            return false;
+        }
+        return user.getRoles().stream()
+                .anyMatch(role -> "ROLE_ADMIN".equals(role.getName()));
     }
     
     public Post updatePost(Post post) {
