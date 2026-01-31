@@ -32,8 +32,15 @@ public class ImportLocalMusicRunner implements CommandLineRunner {
     @Value("${file.upload.path}")
     private String musicRootPath;
 
+    @Value("${music.auto.import:false}")
+    private boolean autoImport;
+
     @Override
     public void run(String... args) throws Exception {
+        if (!autoImport) {
+            log.info(">>>自动导入本地音乐功能已禁用，跳过...");
+            return;
+        }
         log.info(">>>开始导入本地音乐...");
         File marker = new File(musicRootPath + "imported.marker");
         if (marker.exists()) {
