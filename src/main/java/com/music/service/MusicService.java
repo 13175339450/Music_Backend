@@ -47,7 +47,6 @@ public class MusicService {
     }
 
     // 获取音乐列表
-    @Cacheable(value = "musicList", key = "'all'")
     public List<Music> getMusicList() {
         return musicRepository.findByStatus(1); // 只返回已审核通过的音乐
     }
