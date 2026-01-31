@@ -1,8 +1,12 @@
 package com.music.controller;
 
+import com.music.dto.PostCommentDTO;
 import com.music.entity.Comment;
+import com.music.entity.Post;
 import com.music.entity.User;
+import com.music.repository.PostRepository;
 import com.music.service.CommentService;
+import com.music.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +24,21 @@ import com.music.dto.CommentDTO;
 public class CommentController {
     @Autowired
     private CommentService commentService;
-    
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private PostRepository postRepository;
+
     @PostMapping
-    public ResponseEntity<CommentDTO> createComment(@RequestBody Comment comment, @AuthenticationPrincipal User user) {
+    public ResponseEntity<CommentDTO> createComment(@RequestBody PostCommentDTO dto, @AuthenticationPrincipal User user) {
+        Comment comment = new Comment();
+        comment.setContent(dto.getContent());
+        Post post = new Post();
+        post.setId(dto.getPostId());
+        comment.setPost(post);
         comment.setUser(user);
         Comment createdComment = commentService.createComment(comment);
+        postRepository.incrementCommentCount(dto.getPostId());
         return new ResponseEntity<>(CommentDTO.fromComment(createdComment), HttpStatus.CREATED);
     }
     
