@@ -5,9 +5,9 @@ spring:
   # 数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://8.148.27.225:23306/music_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://8.148.29.196:3306/music_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     username: root
-    password: remote
+    password: root
     # Hikari 连接池配置
     hikari:
       # 连接最大存活时间设置为25分钟（比MySQL的wait_timeout短）
